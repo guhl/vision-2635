@@ -53,6 +53,16 @@
 #include <mach/bcm_bt_lpm.h>
 #endif
 
+#ifdef CONFIG_USB_ANDROID_ACM
+static char *usb_functions_acm[] = {
+    "acm",
+};
+static char *usb_functions_adb_acm[] = {
+    "adb",
+    "acm",
+};
+#endif
+
 #include <mach/htc_usb.h>
 #include <mach/hardware.h>
 #include <mach/msm_hsusb.h>
