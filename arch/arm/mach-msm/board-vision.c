@@ -181,8 +181,13 @@ static struct android_usb_platform_data android_usb_pdata = {
 	.manufacturer_name	= "HTC",
 	.num_products = ARRAY_SIZE(usb_products),
 	.products = usb_products,
+#ifdef CONFIG_USB_ANDROID_ACM
+	.num_functions = ARRAY_SIZE(usb_functions_acm),
+	.functions = usb_functions_acm,
+#else
 	.num_functions = ARRAY_SIZE(usb_functions_all),
 	.functions = usb_functions_all,
+#endif
 };
 
 static struct platform_device android_usb_device = {
