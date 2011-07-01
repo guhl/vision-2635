@@ -15,7 +15,7 @@
  * either version 2 of that License or (at your option) any later version.
  */
 
-/* #define VERBOSE_DEBUG */
+#define VERBOSE_DEBUG
 
 #include <linux/kernel.h>
 #include <linux/interrupt.h>
@@ -1094,12 +1094,21 @@ int __init gserial_setup(struct usb_gadget *g, unsigned count)
 	 * MS-Windows.  Otherwise, most of these flags shouldn't affect
 	 * anything unless we were to actually hook up to a serial line.
 	 */
-	gs_tty_driver->init_termios.c_cflag =
-			B9600 | CS8 | CREAD | HUPCL | CLOCAL;
-	gs_tty_driver->init_termios.c_ispeed = 9600;
-	gs_tty_driver->init_termios.c_ospeed = 9600;
+// change this to higher speeds
+//	gs_tty_driver->init_termios.c_cflag =
+//			B9600 | CS8 | CREAD | HUPCL | CLOCAL;
+//	gs_tty_driver->init_termios.c_ispeed = 9600;
+//	gs_tty_driver->init_termios.c_ospeed = 9600;
+//
+//	coding.dwDTERate = cpu_to_le32(9600);
 
-	coding.dwDTERate = cpu_to_le32(9600);
+	gs_tty_driver->init_termios.c_cflag =
+			B115200 | CS8 | CREAD | HUPCL | CLOCAL;
+	gs_tty_driver->init_termios.c_ispeed = 115200;
+	gs_tty_driver->init_termios.c_ospeed = 115200;
+
+	coding.dwDTERate = cpu_to_le32(115200);
+
 	coding.bCharFormat = 8;
 	coding.bParityType = USB_CDC_NO_PARITY;
 	coding.bDataBits = USB_CDC_1_STOP_BITS;

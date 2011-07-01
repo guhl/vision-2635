@@ -180,22 +180,29 @@ noconfig:
 static int __init init_kgdboc(void)
 {
 	/* Already configured? */
-	if (configured == 1)
+	if (configured == 1){
+		printk("kgdb init_kgdboc: already configured");
 		return 0;
+	}
 
 	return configure_kgdboc();
 }
 
 static int kgdboc_get_char(void)
 {
+	int ret;
+	printk("kgdb kgdboc_get_char: called\n");
 	if (!kgdb_tty_driver)
 		return -1;
-	return kgdb_tty_driver->ops->poll_get_char(kgdb_tty_driver,
+	ret = kgdb_tty_driver->ops->poll_get_char(kgdb_tty_driver,
 						kgdb_tty_line);
+	printk("kgdb kgdboc_get_char: ret=%d\n", ret);
+	return ret;
 }
 
 static void kgdboc_put_char(u8 chr)
 {
+	printk("kgdb kgdboc_put_char: called\n");
 	if (!kgdb_tty_driver)
 		return;
 	kgdb_tty_driver->ops->poll_put_char(kgdb_tty_driver,
