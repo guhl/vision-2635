@@ -1358,6 +1358,7 @@ static int gs_poll_init(struct tty_driver *driver, int port_num, char *options) 
 	struct gs_port *port;
 	struct tty_struct *tty;
 
+	pr_vdebug("%s: called. port_num=%d, options=%s\n", __func__, port_num, options);
 	if (!(port_num >= 0 && port_num < N_PORTS))
 		return -EINVAL;
 
@@ -1377,6 +1378,7 @@ static int gs_poll_init(struct tty_driver *driver, int port_num, char *options) 
 }
 
 static int gs_poll_pop_buffer(void) {
+	pr_vdebug("%s: called.\n", __func__);
 	if (console_buf_read >= console_buf_len) {
 		return -EAGAIN;
 	}
@@ -1388,6 +1390,7 @@ static int gs_poll_pop_buffer(void) {
  */
 static void gs_poll_read_complete(struct usb_ep *ep,
 		struct usb_request *req) {
+	pr_vdebug("%s: called. req->status=%d, req->actual=%d\n", __func__, req->status, req->actual);
 	switch (req->status) {
 	case 0:
 		/* get data */
@@ -1418,6 +1421,8 @@ static int __gs_poll_get_char(struct gs_port *port, char *ch) {
 	int rv;
 
 	int read_ch = -EINVAL;
+
+	pr_vdebug("%s: called.\n", __func__);
 
 	BUG_ON(!ept);
 
@@ -1462,6 +1467,8 @@ static int __gs_poll_get_char(struct gs_port *port, char *ch) {
  */
 static void gs_poll_write_complete(struct usb_ep *ep,
 		struct usb_request *req) {
+	pr_vdebug("%s: called.\n", __func__);
+
 	/* nothing needs to be done here */
 }
 
@@ -1476,6 +1483,7 @@ static int __gs_poll_put_char(struct gs_port *port, char ch) {
 	char send_ch = ch;
 	int rv;
 
+	pr_vdebug("%s: called. ch=%d\n", __func__, ch);
 	BUG_ON(!ept);
 
 	usb_req = gs_alloc_req(ept, ept->maxpacket, GFP_ATOMIC);
@@ -1505,6 +1513,8 @@ static int gs_poll_get_char(struct tty_driver *driver, int line) {
 	char char_to_read = 0;
 	int rc = 0;
 
+	pr_vdebug("%s: called. line=%d\n", __func__, line);
+
 	if (!(line >= 0 && line < N_PORTS))
 		return -EINVAL;
 
@@ -1519,7 +1529,9 @@ static int gs_poll_get_char(struct tty_driver *driver, int line) {
 static void gs_poll_put_char(struct tty_driver *driver, int line, char ch) {
 	struct gs_port *port;
 
-	if (!(line >= 0 && line < N_PORTS))
+	pr_vdebug("%s: called. line=%d, ch=%d\n", __func__, line, ch);
+
+ 	if (!(line >= 0 && line < N_PORTS))
 		return;
 
 	if (!(port = ports[line].port))

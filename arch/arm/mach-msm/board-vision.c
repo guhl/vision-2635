@@ -53,16 +53,6 @@
 #include <mach/bcm_bt_lpm.h>
 #endif
 
-#ifdef CONFIG_USB_ANDROID_ACM
-static char *usb_functions_acm[] = {
-    "acm",
-};
-static char *usb_functions_adb_acm[] = {
-    "adb",
-    "acm",
-};
-#endif
-
 #include <mach/htc_usb.h>
 #include <mach/hardware.h>
 #include <mach/msm_hsusb.h>
@@ -181,13 +171,8 @@ static struct android_usb_platform_data android_usb_pdata = {
 	.manufacturer_name	= "HTC",
 	.num_products = ARRAY_SIZE(usb_products),
 	.products = usb_products,
-#ifdef CONFIG_USB_ANDROID_ACM
-	.num_functions = ARRAY_SIZE(usb_functions_adb_acm),
-	.functions = usb_functions_adb_acm,
-#else
 	.num_functions = ARRAY_SIZE(usb_functions_all),
 	.functions = usb_functions_all,
-#endif
 };
 
 static struct platform_device android_usb_device = {

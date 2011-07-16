@@ -919,7 +919,7 @@ static void handle_endpoint(struct usb_info *ui, unsigned bit)
 	unsigned long flags;
 	unsigned info;
 
-#if 0
+#if 1
 	INFO("handle_endpoint() %d %s req=%p(%08x)\n",
 		ept->num, (ept->flags & EPT_FLAG_IN) ? "in" : "out",
 		ept->req, ept->req ? ept->req->item_dma : 0);

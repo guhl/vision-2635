@@ -77,8 +77,12 @@ static char *usb_functions_all[] = {
 #ifdef CONFIG_USB_ANDROID_ACCESSORY
 	"accessory",
 #endif
+#ifdef CONFIG_USB_ANDROID_MASS_STORAGE
 	"usb_mass_storage",
+#endif
+#ifdef CONFIG_USB_ANDROID_ADB
 	"adb",
+#endif
 #ifdef CONFIG_USB_ANDROID_ACM
 	"acm",
 #endif
@@ -132,18 +136,6 @@ static struct android_usb_product usb_products[] = {
 		.product_id	= 0x0c08,
 		.num_functions	= ARRAY_SIZE(usb_functions_diag),
 		.functions	= usb_functions_diag,
-	},
-#endif
-#ifdef CONFIG_USB_ANDROID_ACM
-	{
-		.product_id	= 0x0ff4,
-		.num_functions	= ARRAY_SIZE(usb_functions_acm),
-		.functions	= usb_functions_acm,
-	},
-	{
-		.product_id	= 0x0ff5,
-		.num_functions	= ARRAY_SIZE(usb_functions_adb_acm),
-		.functions	= usb_functions_adb_acm,
 	},
 #endif
 };
